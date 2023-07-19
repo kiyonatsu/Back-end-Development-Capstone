@@ -68,18 +68,17 @@ def photos(request):
 
 def login_view(request):
     if request.method == "POST":
-        if request.method == "POST":
-            username = request.POST.get("username")
-            password = request.POST.get("password")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         try:
             user = User.objects.get(username=username)
+
             if user.check_password(password):
                 login(request, user)
                 return HttpResponseRedirect(reverse("index"))
         except User.DoesNotExist:
             return render(request, "login.html", {"form": LoginForm})
     return render(request, "login.html", {"form": LoginForm})
-
 
 def logout_view(request):
     logout(request)
